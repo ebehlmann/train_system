@@ -4,29 +4,24 @@ require 'rspec'
 DB = PG.connect(:dbname => 'train_system')
 
 class Line
-	def initialize(name)
-		@name = name
-	end
-
-	def name
-		@name
+	attr_reader :id, :name
+	def initialize(arguments = {})
+		@name = arguments[:name]
+		@id = arguments[:id]
 	end
 
 	def self.all
 		results = DB.exec("SELECT * FROM lines;")
+		#puts results.first['name']
 		lines = []
 		results.each do |result|
-			name = result['name']
-			lines << Line.new(name)
+			lines << Line.new(name: result['name'], id: result['id'])
 		end
 		lines
 	end
 
 	def save
-		DB.exec("INSERT INTO lines (name) VALUES ('#{@name}');")
-	end
-
-	def ==(another_line)
-		self.name == another_line.name
+		results = DB.exec("INSERT INTO lines (name) VALUES ('#{@name}') RETURNING id;")
+		@id = results.first['id'].to_i
 	end
 end

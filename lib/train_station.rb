@@ -3,10 +3,11 @@ require 'rspec'
 
 DB = PG.connect(:dbname => 'train_system')
 
-class Train_station
-	def initialize(name, location)
+class TrainStation
+	def initialize(name, location, id)
 		@name = name
 		@location = location
+		@id = id
 	end
 
 	def name
@@ -17,22 +18,23 @@ class Train_station
 		@location
 	end
 
+	def id
+		@id
+	end
+
 	def self.all
 		results = DB.exec("SELECT * FROM stations;")
 		stations = []
 		results.each do |result|
 			name = result['name']
 			location = result['location']
-			stations << Train_station.new(name, location)
+			id = result['id']
+			stations << TrainStation.new(name, location, id)
 		end
 		stations
 	end
 
 	def add
 		DB.exec("INSERT INTO stations (name, location) VALUES ('#{name}', '#{location}');")
-	end
-
-	def ==(another_station)
-		self.name == another_station.name && self.location == another_station.location
 	end
 end

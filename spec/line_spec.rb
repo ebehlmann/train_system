@@ -11,12 +11,12 @@ end
 
 describe Line do
 	it 'is initialized with a name' do
-		test_line = Line.new('Southwest Chief')
+		test_line = Line.new(name: 'Southwest Chief')
 		test_line.should be_an_instance_of Line
 	end
 
 	it 'lets you see its name' do
-		test_line = Line.new('Southwest Chief')
+		test_line = Line.new(name: 'Southwest Chief')
 		test_line.name.should eq 'Southwest Chief'
 	end
 
@@ -25,8 +25,9 @@ describe Line do
 	end
 
 	it 'allows operators to add new lines' do
-		test_line = Line.new('Southwest Chief')
+		test_line = Line.new(name: 'Southwest Chief')
 		test_line.save
-		Line.all.should eq [test_line]
+		puts test_line.inspect
+		Line.all.first.name.should eq 'Southwest Chief'
 	end
 end

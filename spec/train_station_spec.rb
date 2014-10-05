@@ -9,29 +9,34 @@ RSpec.configure do |config|
 	end
 end
 
-describe Train_station do
+describe TrainStation do
 	it 'is initialized with a name and location' do
-		station = Train_station.new('NEW', 'Newton, KS')
-		station.should be_an_instance_of Train_station
+		station = TrainStation.new('NEW', 'Newton, KS', 1)
+		station.should be_an_instance_of TrainStation
 	end
 
 	it 'tells you its name' do
-		station = Train_station.new('NEW', 'Newton, KS')
+		station = TrainStation.new('NEW', 'Newton, KS', 1)
 		station.name.should eq 'NEW'
 	end
 
 	it 'tells you its location' do
-		station = Train_station.new('NEW', 'Newton, KS')
+		station = TrainStation.new('NEW', 'Newton, KS', 1)
 		station.location.should eq 'Newton, KS'
 	end
 
 	it 'allows users to see all stations' do
-		Train_station.all.should eq []
+		TrainStation.all.should eq []
 	end
 
 	it 'allows operators to add new stations' do
-		station = Train_station.new('NEW', 'Newton, KS')
+		station = TrainStation.new('NEW', 'Newton, KS', 1)
 		station.add
-		Train_station.all.should eq [station]
+		TrainStation.all.first.name.should eq 'NEW'
+	end
+
+	it 'allows you to access its id' do
+		station = TrainStation.new('NEW', 'Newton, KS', 1)
+		station.id.should eq 1
 	end
 end
