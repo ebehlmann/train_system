@@ -11,17 +11,17 @@ end
 
 describe TrainStation do
 	it 'is initialized with a name and location' do
-		station = TrainStation.new('NEW', 'Newton, KS', 1)
+		station = TrainStation.new(name: 'NEW', location: 'Newton, KS')
 		station.should be_an_instance_of TrainStation
 	end
 
 	it 'tells you its name' do
-		station = TrainStation.new('NEW', 'Newton, KS', 1)
+		station = TrainStation.new(name: 'NEW', location: 'Newton, KS')
 		station.name.should eq 'NEW'
 	end
 
 	it 'tells you its location' do
-		station = TrainStation.new('NEW', 'Newton, KS', 1)
+		station = TrainStation.new(name: 'NEW', location: 'Newton, KS')
 		station.location.should eq 'Newton, KS'
 	end
 
@@ -30,13 +30,13 @@ describe TrainStation do
 	end
 
 	it 'allows operators to add new stations' do
-		station = TrainStation.new('NEW', 'Newton, KS', 1)
+		station = TrainStation.new(name: 'NEW', location: 'Newton, KS')
 		station.add
 		TrainStation.all.first.name.should eq 'NEW'
 	end
 
 	it 'allows you to access its id' do
-		station = TrainStation.new('NEW', 'Newton, KS', 1)
+		station = TrainStation.new(name: 'NEW', location: 'Newton, KS', id: 1)
 		station.id.should eq 1
 	end
 end

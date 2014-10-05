@@ -12,7 +12,6 @@ class Line
 
 	def self.all
 		results = DB.exec("SELECT * FROM lines;")
-		#puts results.first['name']
 		lines = []
 		results.each do |result|
 			lines << Line.new(name: result['name'], id: result['id'])
