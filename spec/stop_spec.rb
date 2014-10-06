@@ -2,14 +2,15 @@ require 'stop'
 require 'line'
 require 'train_station'
 require 'pg'
+require 'pry'
 
 DB = PG.connect(:dbname => 'train_system')
 
-#RSpec.configure do |config|
-#	config.after(:each) do
-#		DB.exec("DELETE FROM stations_lines *;")
-#	end
-#end
+RSpec.configure do |config|
+	config.after(:each) do
+		DB.exec("DELETE FROM stations_lines *;")
+	end
+end
 
 describe Stop do
 	it 'is initialized with a station id and a line id' do
@@ -44,14 +45,14 @@ describe Stop do
 		Stop.all_at_one_station(station.id).should eq line
 	end
 
-#	it 'tells you which stations a line visits' do
-#		station = TrainStation.new(name: 'NEW', location: 'Newton, KS')
-#		station.add
-#		line = Line.new(name: 'Southwest Chief')
-#		line2 = Line.new(name: 'Zephyr')
-#		line.add
-#		stop = Stop.new(station_id: station.id, line_id: line.id)
-#		stop.add
-#		Stop.all_on_one_line(line.id).should eq station
-#	end
+	it 'tells you which stations a line visits' do
+		station = TrainStation.new(name: 'NEW', location: 'Newton, KS')
+		station.add
+		line = Line.new(name: 'Southwest Chief')
+		line2 = Line.new(name: 'Zephyr')
+		line.add
+		stop = Stop.new(station_id: station.id, line_id: line.id)
+		stop.add
+		Stop.all_on_one_line(line.id).should eq [station]
+	end
 end

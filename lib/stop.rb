@@ -31,7 +31,7 @@ class Stop
 		results.each do |result|
 			station_id = result['station_id'].to_i
 			station_to_add = DB.exec("SELECT * FROM stations WHERE id = #{station_id};")
-			stations << TrainStation.new(name: station_to_add['name'], location: station_to_add['location'])
+			stations << TrainStation.new(name: station_to_add.first['name'], location: station_to_add.first['location'])
 		end
 		stations
 	end
@@ -42,7 +42,7 @@ class Stop
 		results.each do |result|
 			line_id = result['line_id'].to_i
 			line_to_add = DB.exec("SELECT * FROM lines WHERE id = #{line_id};")
-			lines << Line.new(name: line_to_add['name'])
+			lines << Line.new(name: line_to_add.first['name'])
 		end
 		lines
 	end
