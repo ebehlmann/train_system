@@ -26,7 +26,7 @@ describe Line do
 
 	it 'allows operators to add new lines' do
 		test_line = Line.new(name: 'Southwest Chief')
-		test_line.save
+		test_line.add
 		puts test_line.inspect
 		Line.all.first.name.should eq 'Southwest Chief'
 	end
