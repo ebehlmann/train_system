@@ -42,7 +42,7 @@ describe Stop do
 		line.add
 		stop = Stop.new(station_id: station.id, line_id: line.id)
 		stop.add
-		Stop.all_at_one_station(station.id).should eq line
+		Stop.all_at_one_station(station.id).first.name.should eq 'Southwest Chief'
 	end
 
 	it 'tells you which stations a line visits' do
@@ -53,6 +53,6 @@ describe Stop do
 		line.add
 		stop = Stop.new(station_id: station.id, line_id: line.id)
 		stop.add
-		Stop.all_on_one_line(line.id).should eq [station]
+		Stop.all_on_one_line(line.id).first.name.should eq 'NEW'
 	end
 end
