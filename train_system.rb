@@ -61,7 +61,10 @@ def station_list_menu
 		puts "Goodbye!"
 	else
 		lines = Stop.all_at_one_station(station_list_choice)
-		puts lines
+		lines.each do |line|
+			puts line.name
+		end
+		passenger_menu
 	end
 end
 
@@ -69,6 +72,28 @@ def line_list
 	lines = DB.exec("SELECT * FROM lines;")
 	lines.each do |line|
 		puts "#{line['id']}. #{line['name']}"
+	end
+
+	line_list_menu
+end
+
+def line_list_menu
+	puts "Type the number for a line to see which stations it visits."
+	puts "Press 'm' to go back to the menu, or press 'x' to exit."
+	line_list_choice = gets.chomp
+
+	if line_list_choice == 'm'
+		passenger_menu
+	elsif line_list_choice == 'x'
+		puts "Goodbye!"
+	else
+		stations = Stop.all_on_one_line(line_list_choice)
+		stations.each do |station|
+			name_to_add = station.name
+			location_to_add = station.location
+			puts "#{name_to_add}, #{location_to_add}"
+		end
+		passenger_menu
 	end
 end
 
@@ -113,6 +138,30 @@ def line_add
 	line.add
 
 	puts "Line added!"
+	operator_menu
+end
+
+def stop_add
+	puts "Here's a list of stations. Type the number of the station where your stop takes place."
+	stations = DB.exec("SELECT * FROM stations;")
+	stations.each do |station|
+		puts "#{station['id']}. #{station['name']}, #{station['location']}"
+	end
+
+	station_choice = gets.chomp
+
+	puts "Here's a list of lines. Type the number of the line making the stop."
+	lines = DB.exec("SELECT * FROM lines;")
+	lines.each do |line|
+		puts "#{line['id']}. #{line['name']}"
+	end
+
+	line_choice = gets.chomp
+
+	new_stop = Stop.new(station_id: station_choice, line_id: line_choice)
+	new_stop.add
+	puts "Stop added!"
+
 	operator_menu
 end
 
